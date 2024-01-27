@@ -5,89 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 17:01:45 by iziane            #+#    #+#             */
-/*   Updated: 2024/01/27 18:55:28 by klamprak         ###   ########.fr       */
+/*   Created: 2024/01/27 20:54:02 by klamprak          #+#    #+#             */
+/*   Updated: 2024/01/27 21:02:13 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+// TODO ./a.out "1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 #define SIZE 4
 
-void	put_str(char *str)
-{
-	int		i;
+int	valid(int[][SIZE], int, int, int);
+int	solve(int[][SIZE]);
+int	find_empty_cell(int[][SIZE], int *, int *);
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
-}
-
-void	print_board(int board[SIZE + 1][SIZE + 1])
-{
-	int		i;
-	int		j;
-	char	c;
-
-	i = 0;
-	while(i < SIZE)
-	{
-		j = 0;
-		while(j < SIZE)
-		{
-			c = board[i][j] + '0';
-			write(1, &c, 1);
-			j++;
-		}
-		c = '\n';
-		write(1, &c, 1);
-		i++;
-	}
-}
-
-int	*validate_input(char *str)
-{
-	int	i;
-	int	*input_arr;
-	int	is_space;
-	int	is_valid;
-	int	counter;
-
-	i = 0;
-	counter = 0;
-	is_space = 0;
-	is_valid = 1;
-	input_arr = malloc(SIZE * 4 * sizeof(int));
-	while (str[i] != '\0' && is_valid)
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-		{
-			is_space = 1;
-			input_arr[counter] = str[i] - '0';
-			counter++;
-		}
-		else if ((str[i] == ' ' && is_space))
-			is_space = 0;
-		else
-			is_valid = 0;
-		i++;
-	}
-	if (!is_valid || counter != (SIZE * 4) || str[i - 1] == ' ')
-		input_arr[0] = -1;
-	return (input_arr);
-}
+void	put_str(char *str);
+void	print_board(int board[SIZE][SIZE]);
+int	*validate_input(char *str);
+void	optimize_board(int board[SIZE][SIZE], int input[SIZE * 4]);
 
 int	main(int argc, char *argv[])
 {
-	char	row[SIZE + 1] = {1, 2, 3, 4};
-	char	column[SIZE + 1] = {1, 2, 3, 4};
-	int	board[SIZE + 1][SIZE + 1] = {{0}};
+	int	board[SIZE][SIZE] = {0};
 	int	*input;
+	int	row;
+	int	column;
+
+	row = 0;
+	column = 0;
 
 	if (argc != 2){
 		put_str("Error\n");
@@ -98,5 +45,79 @@ int	main(int argc, char *argv[])
 		put_str("Error\n");
 		return (0);
 	}
-	print_board(board);
+	if (solve(board))
+	{
+		print_board(board);
+	}
+	else
+	{
+		put_str("Error: NO SOLUTIONS\n");
+		//TODO_print just error
+	}
+	return (0);
+}
+
+int	valid(int board[][SIZE], int row, int column, int guess)
+{
+	int	i;
+
+	i = 0;
+	while (i < SIZE)
+	{
+		if (board[row][i] == guess)
+			return (0);
+		if (board[i][column] == guess)
+			return (0);
+		i++;
+	}
+	// TODO_check_4_sides_condition
+	return (1);
+}
+
+int find_empty_cell(int board[][SIZE], int *row, int *column)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while(x < SIZE)
+	{
+		y = 0;
+		while (y < SIZE)
+		{
+			if (!board[x][y])
+			{
+				*row = x;
+				*column = y;
+				return (1);
+			}
+			y++;
+		}
+		x++;
+	}
+	return (0);
+}
+
+int	solve(int board[][SIZE])
+{
+	int	row;
+	int	column;
+	int	guess;
+
+	if(!find_empty_cell(board, &row, &column))
+		return (1);
+
+	guess = 1;
+	while (guess <= SIZE)
+	{
+		if (valid(board, row, column, guess))
+		{
+			board[row][column] = guess;
+			if(solve(board))
+				return (1);
+			board[row][column] = 0;
+		}
+		guess++;
+	}
+	return (0);
 }
