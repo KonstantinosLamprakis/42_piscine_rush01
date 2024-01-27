@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:01:45 by iziane            #+#    #+#             */
-/*   Updated: 2024/01/27 20:58:34 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/27 23:04:31 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	print_board(int board[SIZE][SIZE])
 		{
 			c = board[i][j] + '0';
 			write(1, &c, 1);
+			put_str(" ");
 			j++;
 		}
-		c = '\n';
-		write(1, &c, 1);
+		put_str("\n");
 		i++;
 	}
 }
@@ -61,10 +61,10 @@ int	*validate_input(char *str)
 	counter = 0;
 	is_space = 0;
 	is_valid = 1;
-	input_arr = malloc(SIZE * 4 * sizeof(int));
+	input_arr = malloc(SIZE * SIZE * sizeof(int));
 	while (str[i] != '\0' && is_valid)
 	{
-		if (str[i] >= '0' && str[i] <= '9')
+		if (str[i] > '0' && str[i] <= '0' + SIZE)
 		{
 			is_space = 1;
 			input_arr[counter] = str[i] - '0';

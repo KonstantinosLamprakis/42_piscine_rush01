@@ -6,20 +6,21 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:54:02 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/27 21:02:13 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/27 23:19:57 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// TODO ./a.out "1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7"
+//./a.out "1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7"
+//./a.out "4 3 2 1 1 2 2 2 4 3 2 1 1 2 2 2"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 #define SIZE 4
 
-int	valid(int[][SIZE], int, int, int);
-int	solve(int[][SIZE]);
-int	find_empty_cell(int[][SIZE], int *, int *);
+int	valid(int board[][SIZE], int row, int column, int guess, int heights[SIZE]);
+int	solve(int board[][SIZE], int heights[]);
+int find_empty_cell(int board[][SIZE], int *row, int *column);
 
 void	put_str(char *str);
 void	print_board(int board[SIZE][SIZE]);
@@ -29,7 +30,7 @@ void	optimize_board(int board[SIZE][SIZE], int input[SIZE * 4]);
 int	main(int argc, char *argv[])
 {
 	int	board[SIZE][SIZE] = {0};
-	int	*input;
+	int	*heights;
 	int	row;
 	int	column;
 
@@ -40,12 +41,12 @@ int	main(int argc, char *argv[])
 		put_str("Error\n");
 		return (0);
 	}
-	input = validate_input(argv[1]);
-	if (input[0] == -1){
+	heights = validate_input(argv[1]);
+	if (heights[0] == -1){
 		put_str("Error\n");
 		return (0);
 	}
-	if (solve(board))
+	if (solve(board, heights))
 	{
 		print_board(board);
 	}
@@ -57,9 +58,11 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
-int	valid(int board[][SIZE], int row, int column, int guess)
+int	valid(int board[][SIZE], int row, int column, int guess, int heights[SIZE])
 {
 	int	i;
+	int	height;
+	int	max;
 
 	i = 0;
 	while (i < SIZE)
@@ -70,7 +73,66 @@ int	valid(int board[][SIZE], int row, int column, int guess)
 			return (0);
 		i++;
 	}
-	// TODO_check_4_sides_condition
+	// colup check
+	i = 0;
+	height = 0;
+	max = 0;
+	while(i < SIZE)
+	{
+		if(board[i][column] > max)
+		{
+			height++;
+			max = board[i][column];
+		}
+		i++;
+	}
+	if (height > heights[column])
+		return (0);
+	// coldown check
+	i = SIZE - 1;
+	height = 0;
+	max = 0;
+	while(i >= 0)
+	{
+		if(board[i][column] > max)
+		{
+			height++;
+			max = board[i][column];
+		}
+		i--;
+	}
+	if (height > heights[column + 4])
+		return (0);
+	// rowleft check
+	i = 0;
+	height = 0;
+	max = 0;
+	while(i < SIZE)
+	{
+		if(board[row][i] > max)
+		{
+			height++;
+			max = board[row][i];
+		}
+		i++;
+	}
+	if (height > heights[row + 8])
+		return (0);
+	// rowright check
+	i = SIZE - 1;
+	height = 0;
+	max = 0;
+	while(i >= 0)
+	{
+		if(board[row][i] > max)
+		{
+			height++;
+			max = board[row][i];
+		}
+		i--;
+	}
+	if (height > heights[column + 12])
+		return (0);
 	return (1);
 }
 
@@ -98,7 +160,7 @@ int find_empty_cell(int board[][SIZE], int *row, int *column)
 	return (0);
 }
 
-int	solve(int board[][SIZE])
+int	solve(int board[SIZE][SIZE], int heights[])
 {
 	int	row;
 	int	column;
@@ -110,10 +172,10 @@ int	solve(int board[][SIZE])
 	guess = 1;
 	while (guess <= SIZE)
 	{
-		if (valid(board, row, column, guess))
+		if (valid(board, row, column, guess, heights))
 		{
 			board[row][column] = guess;
-			if(solve(board))
+			if(solve(board, heights))
 				return (1);
 			board[row][column] = 0;
 		}
