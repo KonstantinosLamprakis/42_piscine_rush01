@@ -1,17 +1,102 @@
-// 4x4 board, heights 1, 2, 3, 4
-// making sure each row and column only has one box of each size
-// output will contain the first solution you encounter
-// every row and column sees the correct number of boxes from each the possible points of view (left/right for rows, up/down for columns)
-// This is the ONLY acceptable input for your program. Any other input must be considered an error.
-// In case of error or if you can’t find any solutions, display "Error" followed by a line break.
-// Your program must be written in accordance with the Norm
-// If you want bonus points, you may try to handle other map size (up to 9x9 !!!!).
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/27 17:01:45 by iziane            #+#    #+#             */
+/*   Updated: 2024/01/27 18:55:28 by klamprak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// Paterns:
-// for MAX height on side: we fill all cells ex. 1 2 3 4
-// for MIN height on side: you put the MAX first ex. 4
-// for x height on side: MAX should be at least x more cells far from the start
-// same as above: MAX - 1 should be at least x - 1 cell, MAX - 2 at least x - 2
-// for x height on side: you can not put MAX - x in
-// MAX - x could be after the 1st, MAX - x + 1 at 2ns, MAX - x + 2 at 3rd etc.
 
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#define SIZE 4
+
+void	put_str(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+}
+
+void	print_board(int board[SIZE + 1][SIZE + 1])
+{
+	int		i;
+	int		j;
+	char	c;
+
+	i = 0;
+	while(i < SIZE)
+	{
+		j = 0;
+		while(j < SIZE)
+		{
+			c = board[i][j] + '0';
+			write(1, &c, 1);
+			j++;
+		}
+		c = '\n';
+		write(1, &c, 1);
+		i++;
+	}
+}
+
+int	*validate_input(char *str)
+{
+	int	i;
+	int	*input_arr;
+	int	is_space;
+	int	is_valid;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	is_space = 0;
+	is_valid = 1;
+	input_arr = malloc(SIZE * 4 * sizeof(int));
+	while (str[i] != '\0' && is_valid)
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+		{
+			is_space = 1;
+			input_arr[counter] = str[i] - '0';
+			counter++;
+		}
+		else if ((str[i] == ' ' && is_space))
+			is_space = 0;
+		else
+			is_valid = 0;
+		i++;
+	}
+	if (!is_valid || counter != (SIZE * 4) || str[i - 1] == ' ')
+		input_arr[0] = -1;
+	return (input_arr);
+}
+
+int	main(int argc, char *argv[])
+{
+	char	row[SIZE + 1] = {1, 2, 3, 4};
+	char	column[SIZE + 1] = {1, 2, 3, 4};
+	int	board[SIZE + 1][SIZE + 1] = {{0}};
+	int	*input;
+
+	if (argc != 2){
+		put_str("Error\n");
+		return (0);
+	}
+	input = validate_input(argv[1]);
+	if (input[0] == -1){
+		put_str("Error\n");
+		return (0);
+	}
+	print_board(board);
+}
