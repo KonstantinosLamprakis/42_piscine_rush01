@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   recursive.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:54:02 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 01:53:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 04:56:19 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@
 #define S 4
 // declarations of this file main.c
 int		valid(int board[S][S], int row, int column, int guess);
-int		solve(int board[S][S], int inp_heigh_arr[S * 4]);
+int		solve(int board[S][S], int inp_heigh_arr[16]);
 int		find_empty_cell(int board[S][S], int *row, int *column);
+int		validate_all(int board[S][S], int inp_heigh_arr[16]);
 void	put_str(char *str);
 // declarations of util.c
 void	print_board(int board[S][S]);
 int		validate_input(char *str, int *input_arr);
 void	initialize_table(int board[S][S]);
 // declarations of valid.c
-int		is_col_up_valid(int board[S][S], int col, int guess, int h_ar[S]);
-int		is_col_down_valid(int board[S][S], int col, int guess, int h_ar[S]);
-int		is_row_left_valid(int board[S][S], int row, int guess, int h_ar[S]);
-int		is_row_rig_val(int board[S][S], int row, int guess, int h_ar[S]);
+int		is_col_up_valid(int board[S][S], int col, int h_ar[S]);
+int		is_col_down_valid(int board[S][S], int col, int h_ar[S]);
+int		is_row_left_valid(int board[S][S], int row, int h_ar[S]);
+int		is_row_rig_val(int board[S][S], int row, int h_ar[S]);
 
 int	main(int argc, char *argv[])
 {
@@ -102,7 +103,7 @@ int	find_empty_cell(int board[S][S], int *row, int *column)
 	return (0);
 }
 
-int	solve(int board[S][S], int inp_heigh_arr[S * 4])
+int	solve(int board[S][S], int inp_heigh_arr[16])
 {
 	int	row;
 	int	column;
@@ -110,16 +111,13 @@ int	solve(int board[S][S], int inp_heigh_arr[S * 4])
 	int	is_v;
 
 	if (!find_empty_cell(board, &row, &column))
-		return (1);
+	{
+		return (validate_all(board, inp_heigh_arr));
+	}
 	guess = 1;
 	while (guess <= S)
 	{
-		is_v = valid(board, row, column, guess);
-		is_v = is_v && is_col_up_valid(board, column, guess, inp_heigh_arr);
-		is_v = is_v && is_col_down_valid(board, column, guess, inp_heigh_arr);
-		is_v = is_v && is_row_left_valid(board, row, guess, inp_heigh_arr);
-		is_v = is_v && is_row_rig_val(board, row, guess, inp_heigh_arr);
-		if (is_v)
+		if(valid(board, row, column, guess))
 		{
 			board[row][column] = guess;
 			if (solve(board, inp_heigh_arr))
@@ -129,4 +127,28 @@ int	solve(int board[S][S], int inp_heigh_arr[S * 4])
 		guess++;
 	}
 	return (0);
+}
+
+int	validate_all(int board[S][S], int inp_heigh_arr[16])
+{
+	int	row;
+	int	column;
+	int	is_v;
+
+	row = 0;
+	is_v = 1;
+	while (row < S && is_v)
+	{
+		column = 0;
+		while (column < S && is_v)
+		{
+			is_v = is_v && is_col_up_valid(board, column, inp_heigh_arr);
+			is_v = is_v && is_col_down_valid(board, column, inp_heigh_arr);
+			is_v = is_v && is_row_left_valid(board, row, inp_heigh_arr);
+			is_v = is_v && is_row_rig_val(board, row, inp_heigh_arr);
+			column++;
+		}
+		row++;
+	}
+	return (is_v);
 }

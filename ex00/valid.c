@@ -6,13 +6,14 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:25:52 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 01:35:39 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 04:59:50 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #define SIZE 4
 
-int	is_col_up_valid(int board[SIZE][SIZE], int col, int guess, int h_ar[SIZE])
+int	is_col_up_valid(int board[SIZE][SIZE], int col, int h_ar[SIZE])
 {
 	int	i;
 	int	height;
@@ -35,7 +36,7 @@ int	is_col_up_valid(int board[SIZE][SIZE], int col, int guess, int h_ar[SIZE])
 	return (1);
 }
 
-int	is_col_down_valid(int board[SIZE][SIZE], int col, int guess, int h_ar[SIZE])
+int	is_col_down_valid(int board[SIZE][SIZE], int col, int h_ar[SIZE])
 {
 	int	i;
 	int	height;
@@ -58,7 +59,7 @@ int	is_col_down_valid(int board[SIZE][SIZE], int col, int guess, int h_ar[SIZE])
 	return (1);
 }
 
-int	is_row_left_valid(int board[SIZE][SIZE], int row, int guess, int h_ar[SIZE])
+int	is_row_left_valid(int board[SIZE][SIZE], int row, int h_ar[SIZE])
 {
 	int	i;
 	int	height;
@@ -81,12 +82,11 @@ int	is_row_left_valid(int board[SIZE][SIZE], int row, int guess, int h_ar[SIZE])
 	return (1);
 }
 
-int	is_row_rig_val(int board[SIZE][SIZE], int row, int guess, int h_ar[SIZE])
+int	is_row_rig_val(int board[SIZE][SIZE], int row, int h_ar[SIZE])
 {
 	int	i;
 	int	height;
 	int	max;
-
 	i = SIZE - 1;
 	height = 0;
 	max = 0;
