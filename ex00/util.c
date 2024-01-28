@@ -6,13 +6,14 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:01:45 by iziane            #+#    #+#             */
-/*   Updated: 2024/01/28 16:31:31 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:43:32 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #define SIZE 4
 
+// just initialize table with 0
 void	initialize_table(int board[SIZE][SIZE])
 {
 	int	i;
@@ -43,6 +44,7 @@ void	put_str(char *str)
 	}
 }
 
+// just print all the table
 void	print_board(int board[SIZE][SIZE])
 {
 	int		i;
@@ -65,6 +67,8 @@ void	print_board(int board[SIZE][SIZE])
 	}
 }
 
+// not 2 spaces in the row, not space at the start or at the end
+// no ther character than digits from 1 to size
 int	validate_input(char *str, int *input_arr)
 {
 	int	i;

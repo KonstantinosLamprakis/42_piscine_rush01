@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:54:02 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 16:30:43 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:41:55 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ int	main(int argc, char *argv[])
 		print_board(board);
 	else
 		put_str("Error\n");
+	free(inp_heigh_arr);
+	return (0);
 }
 
+// check if the guess exists already in a column or a row, so is invalid
 int	valid(int board[S][S], int row, int column, int guess)
 {
 	int	i;
@@ -76,6 +79,7 @@ int	valid(int board[S][S], int row, int column, int guess)
 	return (1);
 }
 
+// find next empty cell and assign coordinators to pointers
 int	find_empty_cell(int board[S][S], int *row, int *column)
 {
 	int	x;
@@ -100,6 +104,7 @@ int	find_empty_cell(int board[S][S], int *row, int *column)
 	return (0);
 }
 
+// recurcive run until fill all cells without conflict
 int	solve(int board[S][S], int inp_heigh_arr[16])
 {
 	int	row;
@@ -125,6 +130,7 @@ int	solve(int board[S][S], int inp_heigh_arr[16])
 	return (0);
 }
 
+// after the board is filled, the check if all heights are valid
 int	validate_all(int board[S][S], int inp_heigh_arr[16])
 {
 	int	row;
