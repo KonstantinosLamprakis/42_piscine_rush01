@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:01:45 by iziane            #+#    #+#             */
-/*   Updated: 2024/01/28 05:07:59 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:31:31 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	validate_input(char *str, int *input_arr)
 			return (0);
 		i++;
 	}
-	if (counter != (SIZE * SIZE) || str[i - 1] == ' ' || str[0] == ' ')
+	if (counter != (SIZE * 4) || str[i - 1] == ' ' || str[0] == ' ')
 		return (0);
 	return (1);
 }

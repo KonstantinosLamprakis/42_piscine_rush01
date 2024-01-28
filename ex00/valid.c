@@ -6,11 +6,10 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:25:52 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 05:10:01 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:30:30 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #define SIZE 4
 
 int	is_col_up_valid(int board[SIZE][SIZE], int col, int h_ar[SIZE])

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:54:02 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 05:10:18 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:30:43 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 // ./a.out "3 2 2 1 1 3 2 2 3 2 3 1 1 3 2 2"
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 #define S 4
 // declarations of this file main.c
@@ -58,7 +57,7 @@ int	main(int argc, char *argv[])
 	if (solve(board, inp_heigh_arr))
 		print_board(board);
 	else
-		put_str("Error TODO not solution\n");
+		put_str("Error\n");
 }
 
 int	valid(int board[S][S], int row, int column, int guess)
