@@ -6,11 +6,17 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:25:52 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 17:17:29 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:52:29 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define SIZE 6
+#define SIZE 4
+
+int	optimize_choice(int board[SIZE][SIZE], int col, int h_ar[SIZE])
+{
+	return (0);
+}
+
 // each function counts how many boxes can you see from the coresponding view
 int	is_col_up_valid(int board[SIZE][SIZE], int col, int h_ar[SIZE])
 {
@@ -30,7 +36,7 @@ int	is_col_up_valid(int board[SIZE][SIZE], int col, int h_ar[SIZE])
 		}
 		i++;
 	}
-	if (height > h_ar[col])
+	if (height != h_ar[col])
 		return (0);
 	return (1);
 }
@@ -53,7 +59,7 @@ int	is_col_down_valid(int board[SIZE][SIZE], int col, int h_ar[SIZE])
 		}
 		i--;
 	}
-	if (height > h_ar[col + SIZE])
+	if (height != h_ar[col + SIZE])
 		return (0);
 	return (1);
 }
@@ -76,7 +82,7 @@ int	is_row_left_valid(int board[SIZE][SIZE], int row, int h_ar[SIZE])
 		}
 		i++;
 	}
-	if (height > h_ar[row + SIZE * 2])
+	if (height != h_ar[row + SIZE * 2])
 		return (0);
 	return (1);
 }
@@ -99,7 +105,7 @@ int	is_row_rig_val(int board[SIZE][SIZE], int row, int h_ar[SIZE])
 		}
 		i--;
 	}
-	if (height > h_ar[row + SIZE * 3])
+	if (height != h_ar[row + SIZE * 3])
 		return (0);
 	return (1);
 }

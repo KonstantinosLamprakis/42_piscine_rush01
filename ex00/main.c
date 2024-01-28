@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:54:02 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 17:17:25 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:52:36 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define S 6
-#define S4 24
+#define S 4
+#define S4 16
 // declarations of this file main.c
 int		valid(int board[S][S], int row, int column, int guess);
 int		solve(int board[S][S], int inp_heigh_arr[S4]);

@@ -6,12 +6,12 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:01:45 by iziane            #+#    #+#             */
-/*   Updated: 2024/01/28 17:21:59 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:52:25 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#define SIZE 6
+#define SIZE 4
 
 // just initialize table with 0
 void	initialize_table(int board[SIZE][SIZE])
