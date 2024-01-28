@@ -1,19 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   utility.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:01:45 by iziane            #+#    #+#             */
-/*   Updated: 2024/01/27 23:04:31 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 01:08:36 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
 #define SIZE 4
+
+void	initialize_table(int board[SIZE][SIZE])
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < SIZE)
+	{
+		j = 0;
+		while (j < SIZE)
+		{
+			board[i][j] = 0;
+			j++;
+		}
+		i++;
+	}
+}
 
 void	put_str(char *str)
 {
@@ -34,10 +50,10 @@ void	print_board(int board[SIZE][SIZE])
 	char	c;
 
 	i = 0;
-	while(i < SIZE)
+	while (i < SIZE)
 	{
 		j = 0;
-		while(j < SIZE)
+		while (j < SIZE)
 		{
 			c = board[i][j] + '0';
 			write(1, &c, 1);
@@ -49,39 +65,25 @@ void	print_board(int board[SIZE][SIZE])
 	}
 }
 
-int	*validate_input(char *str)
+int	validate_input(char *str, int *input_arr)
 {
 	int	i;
-	int	*input_arr;
-	int	is_space;
-	int	is_valid;
 	int	counter;
 
 	i = 0;
 	counter = 0;
-	is_space = 0;
-	is_valid = 1;
-	input_arr = malloc(SIZE * SIZE * sizeof(int));
-	while (str[i] != '\0' && is_valid)
+	while (str[i] != '\0')
 	{
 		if (str[i] > '0' && str[i] <= '0' + SIZE)
 		{
-			is_space = 1;
 			input_arr[counter] = str[i] - '0';
 			counter++;
 		}
-		else if ((str[i] == ' ' && is_space))
-			is_space = 0;
-		else
-			is_valid = 0;
+		else if (!(str[i] == ' ' && str[i + 1] != ' '))
+			return (0);
 		i++;
 	}
-	if (!is_valid || counter != (SIZE * 4) || str[i - 1] == ' ')
-		input_arr[0] = -1;
-	return (input_arr);
-}
-
-void	optimize_board(void	put_str(char *str), int input[SIZE * 4])
-{
-	//TODO place the right number based on patterns to save time
+	if (counter != (SIZE * SIZE) || str[i - 1] == ' ' || str[0] == ' ')
+		return (0);
+	return (1);
 }
