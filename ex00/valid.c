@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:25:52 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 04:59:50 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 05:10:01 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	is_row_rig_val(int board[SIZE][SIZE], int row, int h_ar[SIZE])
 	int	i;
 	int	height;
 	int	max;
+
 	i = SIZE - 1;
 	height = 0;
 	max = 0;

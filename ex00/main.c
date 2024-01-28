@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:54:02 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 04:56:19 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 05:10:18 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	main(int argc, char *argv[])
 int	valid(int board[S][S], int row, int column, int guess)
 {
 	int	i;
-	int	height;
-	int	max;
 
 	i = 0;
 	while (i < S)
@@ -108,7 +106,6 @@ int	solve(int board[S][S], int inp_heigh_arr[16])
 	int	row;
 	int	column;
 	int	guess;
-	int	is_v;
 
 	if (!find_empty_cell(board, &row, &column))
 	{
@@ -117,7 +114,7 @@ int	solve(int board[S][S], int inp_heigh_arr[16])
 	guess = 1;
 	while (guess <= S)
 	{
-		if(valid(board, row, column, guess))
+		if (valid(board, row, column, guess))
 		{
 			board[row][column] = guess;
 			if (solve(board, inp_heigh_arr))
