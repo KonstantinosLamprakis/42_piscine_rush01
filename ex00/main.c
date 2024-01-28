@@ -6,22 +6,28 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:54:02 by klamprak          #+#    #+#             */
-/*   Updated: 2024/01/28 16:41:55 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:17:25 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// 4x4
 // ./a.out "4 3 2 1 1 2 2 2 4 3 2 1 1 2 2 2"
 // ./a.out "3 1 2 3 2 2 3 1 2 2 1 3 3 2 2 1"
 // ./a.out "3 2 2 1 1 3 2 2 3 2 3 1 1 3 2 2"
+
+// 6x6
+// ./a.out "5 1 2 2 3 3 1 5 3 3 2 2 2 3 3 3 2 1 4 3 2 2 1 3"
+// ./a.out "3 1 3 2 2 3 1 2 3 4 3 2 2 2 3 3 3 1 4 3 2 2 1 3"
 #include <unistd.h>
 #include <stdlib.h>
 
-#define S 4
+#define S 6
+#define S4 24
 // declarations of this file main.c
 int		valid(int board[S][S], int row, int column, int guess);
-int		solve(int board[S][S], int inp_heigh_arr[16]);
+int		solve(int board[S][S], int inp_heigh_arr[S4]);
 int		find_empty_cell(int board[S][S], int *row, int *column);
-int		validate_all(int board[S][S], int inp_heigh_arr[16]);
+int		validate_all(int board[S][S], int inp_heigh_arr[S4]);
 void	put_str(char *str);
 // declarations of util.c
 void	print_board(int board[S][S]);
@@ -105,7 +111,7 @@ int	find_empty_cell(int board[S][S], int *row, int *column)
 }
 
 // recurcive run until fill all cells without conflict
-int	solve(int board[S][S], int inp_heigh_arr[16])
+int	solve(int board[S][S], int inp_heigh_arr[S4])
 {
 	int	row;
 	int	column;
@@ -131,26 +137,20 @@ int	solve(int board[S][S], int inp_heigh_arr[16])
 }
 
 // after the board is filled, the check if all heights are valid
-int	validate_all(int board[S][S], int inp_heigh_arr[16])
+int	validate_all(int board[S][S], int inp_heigh_arr[S4])
 {
-	int	row;
-	int	column;
+	int	i;
 	int	is_v;
 
-	row = 0;
+	i = 0;
 	is_v = 1;
-	while (row < S && is_v)
+	while (i < S && is_v)
 	{
-		column = 0;
-		while (column < S && is_v)
-		{
-			is_v = is_v && is_col_up_valid(board, column, inp_heigh_arr);
-			is_v = is_v && is_col_down_valid(board, column, inp_heigh_arr);
-			is_v = is_v && is_row_left_valid(board, row, inp_heigh_arr);
-			is_v = is_v && is_row_rig_val(board, row, inp_heigh_arr);
-			column++;
-		}
-		row++;
+		is_v = is_v && is_row_left_valid(board, i, inp_heigh_arr);
+		is_v = is_v && is_row_rig_val(board, i, inp_heigh_arr);
+		is_v = is_v && is_col_up_valid(board, i, inp_heigh_arr);
+		is_v = is_v && is_col_down_valid(board, i, inp_heigh_arr);
+		i++;
 	}
 	return (is_v);
 }
